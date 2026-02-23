@@ -22,14 +22,14 @@ Tiendo a adaptarme rapido a las situaciones y ser flexible con la forma como deb
 
 ### Aspectos a mejorar
 
-Tiendo a dejar todo para lo ultimo y a ser bastante desorganizado con mi tiempo por lo que debo tratar de planificar bien todo lo relacionado con el proyecto. En ocasiones puedo llegar a ser algo disperso en reuniones muy largas. A veces me puede llegar a costar abrirme a mis compañeros al inicio pero normalmente al pasar las semanas no tendria que haber problema.
+Tiendo a dejar todo para lo ultimo y a ser bastante desorganizado con mi tiempo por lo que debo tratar de planificar bien todo lo relacionado con el proyecto. En ocasiones puedo llegar a ser algöño disperso en reuniones muy largas. A veces me puede llegar a costar abrirme a mis compañeros al inicio pero normalmente al pasar las semanas no tendria que haber problema.
 
 ## Pregunta 2 
 
 ### Compromisos del grupo
 - Para prevenir que falten tareas o que se duplique trabajo, utilizaremos el tablero Kanban para organizar las actividades: las que están pendientes, las que están en proceso, las que han sido revisadas y las ya completadas..
 -- Reglas básicas uso GitHub: No hacer cambios directos a la rama principal sin avisar, todo camnbio a main sera por Pull Resquest, cada uno tendra una rama propia, las ramas deben tener nombres claros y actualizar repositorio siempre antes de trabajar.
-- Nos comprometemos a avisar con minimo 3 dias de anticipación la incapacidad de hacer una tarea, ademas cada uno podra fallar maximo dos tareas, si sobrepasa este numero procederemos a hablar con el docente esa situación.
+- Nos comprometemos a avisar con minimo 3 dias de anticipación la imposibilidad de hacer una tarea, ademas cada uno podra fallar maximo dos tareas, si sobrepasa este numero procederemos a hablar con el docente esa situación.
 - Las decisiones seran tomadas en grupo con democracia y comunicacion.
 
 
