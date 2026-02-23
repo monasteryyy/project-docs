@@ -1,4 +1,4 @@
-## pregunta 1
+﻿## pregunta 1
 
 
 ## Julian David Nieto Rodriguez
@@ -23,6 +23,17 @@ Tiendo a adaptarme rapido a las situaciones y ser flexible con la forma como deb
 ### Aspectos a mejorar
 
 Tiendo a dejar todo para lo ultimo y a ser bastante desorganizado con mi tiempo por lo que debo tratar de planificar bien todo lo relacionado con el proyecto. En ocasiones puedo llegar a ser algo disperso en reuniones muy largas. A veces me puede llegar a costar abrirme a mis compañeros al inicio pero normalmente al pasar las semanas no tendria que haber problema.
+## Tomás Mozo González 
+
+### Rol que me gustaría desempeñar
+La verdad me interesa tanto el desarrollo de Frontend como del Backend así que un rol más técnico y de desarrollo es lo que me gustaría, y profundizar en arquitectura y diseño, me llaman la atención los procesos creativos tanto de la arquitectura como el diseño de una aplicación.
+
+### Fortalezas
+En cuanto a fortalezas técnicas poseo no mucho más que los conocimientos que se adquieren hasta este punto de la carrera como programación básica, orientada a objetos, manejo de bases de datos con SQL y estructuras de datos. Ya a nivel de fortalezas en habilidades blandas y para el trabajo en equipo considero que soy bueno comunicándome, proponiendo ideas, siendo proactivo y en especial tratando de explorar otras perspectivas diferentes a las mías en las formas de abordar un problema.
+
+### Aspectos a mejorar
+Los aspectos que considero debo trabajar para mejorar mi trabajo en equipo son principalmente relacionados al manejo del tiempo y la productividad, así como pedir más ayuda cuando me sienta estancado con alguna tarea que se me delegó, ya sea con los mismos compañeros de equipo o incluso con el profesor o algún monitor en este caso puntual. 
+
 
 ## Pregunta 2 
 
