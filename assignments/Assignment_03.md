@@ -18,7 +18,7 @@ Los aspectos que debo mejorar para ser un buen integrante de equipo son retener 
 ## Julian David Nieto Rodriguez
 
 ### Rol que me gustaría desempeñar
-Me gustaría ejercer un rol enfocado en pruebas de calidad. ya que me interesa que se cumpla la meta establecido con el proyecto, detectando errores que puedan surgir por el camino. También me gustaría hacer casos de prueba, pruebas funcionales, y en la mejora continua de los procesos del software.
+Me gustaría estar enfocado en las pruebas de calidad. ya que me interesa que se cumpla la meta establecido con el proyecto, detectando errores que puedan surgir por el camino. También me gustaría hacer casos de prueba, pruebas funcionales, y en la mejora continua de los procesos del software.
 
 ### Fortalezas
 Una de mis principales fortalezas es mi capacidad de aprendizaje rápido, lo que me permite usar con facilidad nuevas herramientas, metodologías y tecnologías. Además, tengo buena capacidad de análisis, lo que me ayuda a identificar posibles errores o inconsistencias en los procesos. También tengo pensamiento lógico y atención al detalle que me pueden ayudar a la deteccion de errores.
@@ -55,6 +55,7 @@ Los aspectos que considero debo trabajar para mejorar mi trabajo en equipo son p
 - Para que no falten tareas o que se duplique trabajo, utilizaremos el tablero Kanban para organizar las actividades: las que están pendientes, las que están en proceso, las que han sido revisadas y las ya completadas..
 -- Reglas básicas uso GitHub: No hacer cambios directos a la rama principal sin avisar, todo camnbio a main sera por Pull Resquest, cada uno tendra una rama propia, las ramas deben tener nombres claros y actualizar repositorio siempre antes de trabajar.
 - Las decisiones seran tomadas en grupo con comunicacion, respeto y democracia.
+
 
 
 
