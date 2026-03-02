@@ -28,7 +28,6 @@ El objetivo principal es ofrecer una alternativa de trabajo rápido, ideal para:
 * Estudiantes que buscan ingresos para su día a día
 * Personas que necesitan dinero ocasional para resolver situaciones puntuales
 * Usuarios que desean contratar ayuda de forma eficiente y sin trámites complejos
-  
 En esencia, **(Nombre del Proyecto)** busca ser una solución práctica para *“salir del paso”* mediante tareas simples, rápidas y con pago justo.
 ---
 
