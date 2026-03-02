@@ -1,4 +1,4 @@
-# (FreeTime / WorkPlace / TrabajoExpress)
+# FreeTime
 - Una nueva forma de generar ingresos rápidos y oportunidades inmediatas.
 ---
 ##  Nombre del Grupo
@@ -12,7 +12,7 @@
 
 ---
 
-**(Nombre del Proyecto)** es una aplicación enfocada en la conexión rápida entre personas que necesitan resolver una tarea remunerada y usuarios dispuestos a realizarla de forma ágil y sencilla.
+**FreeTime** es una aplicación enfocada en la conexión rápida entre personas que necesitan resolver una tarea remunerada y usuarios dispuestos a realizarla de forma ágil y sencilla.
 La aplicación permite que un usuario publique una tarea o trabajo, definiendo claramente:
 
 * El tipo de tarea
