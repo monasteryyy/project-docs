@@ -1,12 +1,10 @@
 # (FreeTime / WorkPlace / TrabajoExpress)
-Una nueva forma de generar ingresos rápidos y oportunidades inmediatas.
+- Una nueva forma de generar ingresos rápidos y oportunidades inmediatas.
 ---
 ##  Nombre del Grupo
-**Monasteryyy**
+- Monasteryyy
 ---
 ## Contacto e Integrantes
-
-* **Integrantes y contacto.
   * Julian David Nieto Rodiguez - Jnietoro@unal.edu.co
   * Diego Fernando Tique Ramirez - (Contacto)
   * Tomas Mozo Gonzalez - (Contacto)
