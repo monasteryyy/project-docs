@@ -30,12 +30,7 @@ En esencia, **(Nombre del Proyecto)** busca ser una solución práctica para *�
 ---
 
 ## 🎨 Logo del Proyecto
-
-*(Logo del proyecto — pendiente de definir)*
-
-> Aquí puede insertarse el logo una vez esté disponible:
->
-> `![Logo del Proyecto](ruta/al/logo.png)`
+![Logo app](https://github.com/user-attachments/assets/970f0123-c923-4642-8cd3-bbbdd647d272)
 
 ---
 
