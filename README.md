@@ -6,9 +6,9 @@
 ---
 ## Contacto e Integrantes
   * Julian David Nieto Rodiguez - Jnietoro@unal.edu.co
-  * Diego Fernando Tique Ramirez - (Contacto)
-  * Tomas Mozo Gonzalez - (Contacto)
-  * Eduin Julian Barrera Rincon - (Contacto)
+  * Diego Fernando Tique Ramirez - dtique@unal.edu.co
+  * Tomas Mozo Gonzalez - tmozo@unal.edu.co
+  * Eduin Julian Barrera Rincon - ejbarrerar@unal.edu.co
 
 ---
 
