@@ -1,39 +1,41 @@
 Name: nestjs-best-practices
 
-Description: Reglas de buenas prácticas y patrones de arquitectura NestJS para evaluar, revisar y refactorizar el código del backend. Valida la cohesión modular, la inyección de dependencias, la seguridad con JWT, el uso de Prisma ORM y la comunicación estricta entre capas funcionales.
+Description: Best practices and architecture rules for NestJS to evaluate, review, and refactor backend code. Validates modular cohesion, dependency injection, JWT security, Prisma ORM usage, and strict communication between functional layers.
 
 Metadata:
-  Version: "1.1.0"
----
-
-# 🛠️ Guía de Buenas Prácticas y Skill de Validación - Backend (NestJS)
-
-Este documento establece los estándares de calidad de código, reglas de diseño de software y criterios estrictos de revisión (MUST/SHOULD) aplicados al desarrollo del ecosistema backend del proyecto.
+Version: "1.1.0"
 
 ---
 
-## 1. Definición Detallada de la Arquitectura y Dependencias
+# 🛠️ Backend Validation Skill and Best Practices Guide (NestJS)
 
-El backend está estructurado bajo una **Arquitectura Modular Basada en Características (Feature-Based Architecture)**. Se prohíbe la organización horizontal tradicional por capas técnicas genéricas independientes. En su lugar, el sistema se compone de módulos verticales autónomos y altamente cohesivos.
+This document defines the code quality standards, software design rules, and strict review criteria (MUST/SHOULD) applied to the backend ecosystem of the project.
 
-### 🔄 Flujo de Comunicación Interna por Capas
-Cada módulo funcional está aislado y respeta un flujo unidireccional estricto dividido en tres niveles de responsabilidad:
+---
 
-1.  **Capa de Entrada (Controladores - `Controllers`):** Interceptan las peticiones HTTP externas, gestionan los endpoints y delegan la ejecución de manera inmediata. No contienen lógica de negocio.
-2.  **Capa de Negocio (Servicios - `Services`):** Orquestan la lógica del sistema, aplican validaciones de estados y mutan los datos según las reglas requeridas.
-3.  **Capa de Acceso a Datos (Prisma ORM):** Abstracción tipo-segura encargada de interactuar directamente con la base de datos PostgreSQL de manera centralizada.
+## 1. Detailed Architecture and Dependency Definition
+
+The backend follows a **Feature-Based Modular Architecture**. Traditional horizontal organization by generic technical layers is prohibited. Instead, the system is composed of autonomous, highly cohesive vertical feature modules.
+
+### 🔄 Internal Layer Communication Flow
+
+Each functional module is isolated and follows a strict one-way communication flow divided into three responsibility levels:
+
+1. **Entry Layer (Controllers):** Handle incoming HTTP requests, expose endpoints, and immediately delegate execution. Controllers must not contain business logic.
+2. **Business Layer (Services):** Orchestrate business rules, validate state transitions, and apply all required business logic.
+3. **Data Access Layer (Prisma ORM):** Type-safe abstraction responsible for centralized interaction with the PostgreSQL database.
 
 ```text
 ┌────────────────────────────────────────────────────────┐
-│               Petición HTTP del Cliente                │
+│               Client HTTP Request                      │
 └───────────────────────────┬────────────────────────────┘
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│             Controladores (tasks.controller)           │
+│            Controllers (tasks.controller)              │
 └───────────────────────────┬────────────────────────────┘
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│              Servicios (tasks.service)                 │
+│             Services (tasks.service)                   │
 └───────────────────────────┬────────────────────────────┘
                             ▼
 ┌────────────────────────────────────────────────────────┐
@@ -41,134 +43,309 @@ Cada módulo funcional está aislado y respeta un flujo unidireccional estricto 
 └────────────────────────────────────────────────────────┘
 ```
 
-### 📊 Matriz de Dependencias entre Módulos
-Para garantizar que **no exista acoplamiento circular**, el mapa de importaciones en NestJS está estrictamente controlado bajo las siguientes directrices:
+### 📊 Module Dependency Matrix
 
-| Desde Módulo | Hacia Módulo | Propósito y Conectividad |
-| :--- | :--- | :--- |
-| `AppModule` | `UsersModule` | Registra y expone el módulo de gestión de usuarios en la raíz. |
-| `AppModule` | `TasksModule` | Registra y expone el módulo de control de tareas en la raíz. |
-| `AppModule` | `AuthModule` | Registra y expone el flujo de seguridad y sesiones. |
-| `AppModule` | `PostulationsModule` | Registra el flujo relacional de postulaciones. |
-| `AppModule` | `PrismaModule` | Instancia de conexión compartida para el ciclo de vida del servidor. |
-| `UsersModule` | `PrismaModule` | Permite a `UsersService` persistir cuentas utilizando el cliente de Prisma. |
-| `TasksModule` | `PrismaModule` | Permite a `TasksService` persistir tareas e historiales de estados. |
-| `AuthModule` | `PrismaModule` | Valida credenciales contra las entidades de la base de datos. |
-| `AuthModule` | `JwtModule` | Sella, firma y descifra los tokens de sesión seguros para las Guards. |
+To guarantee that **no circular dependencies exist**, NestJS module imports must strictly follow the rules below:
+
+| From Module   | To Module            | Purpose and Connectivity                                                      |
+| :------------ | :------------------- | :---------------------------------------------------------------------------- |
+| `AppModule`   | `UsersModule`        | Registers and exposes the user management module in the application root.     |
+| `AppModule`   | `TasksModule`        | Registers and exposes the task management module in the application root.     |
+| `AppModule`   | `AuthModule`         | Registers and exposes authentication and security flows.                      |
+| `AppModule`   | `PostulationsModule` | Registers the postulations feature module.                                    |
+| `AppModule`   | `PrismaModule`       | Provides the shared database connection throughout the application lifecycle. |
+| `UsersModule` | `PrismaModule`       | Allows `UsersService` to persist user data through Prisma.                    |
+| `TasksModule` | `PrismaModule`       | Allows `TasksService` to persist tasks and task state history.                |
+| `AuthModule`  | `PrismaModule`       | Validates credentials against database entities.                              |
+| `AuthModule`  | `JwtModule`          | Signs, verifies, and decodes secure JWT tokens for authentication guards.     |
 
 ---
 
-## 🚦 2. Criterios de Revisión: MUST Have y SHOULD Have
+## 🚦 2. Review Criteria: MUST Have and SHOULD Have
 
-### 🏛️ Arquitectura Modular (`arch-`)
+### 🏛️ Modular Architecture (`arch-`)
+
 #### `arch-avoid-circular-deps`
-* **Clasificación:** 🔴 **MUST HAVE**
-* **Descripción:** Queda estrictamente prohibido el acoplamiento circular directo o indirecto entre módulos funcionales. Cada característica debe resolverse de forma aislada.
-* **❌ Mala Práctica:**
-    ```typescript
-    // En tasks.module.ts
-    @Module({ imports: [forwardRef(() => UsersModule)] })
-    export class TasksModule {}
-    ```
-* **✅ Buena Práctica:**
-    ```typescript
-    // En tasks.module.ts compartiendo únicamente acceso desacoplado mediante PrismaModule
-    @Module({
-      imports: [PrismaModule],
-      controllers: [TasksController],
-      providers: [TasksService],
-    })
-    export class TasksModule {}
-    ```
+
+* **Classification:** 🔴 **MUST HAVE**
+* **Description:** Direct or indirect circular dependencies between functional modules are strictly prohibited. Every feature must remain isolated.
+* **❌ Bad Practice:**
+
+```typescript
+// tasks.module.ts
+@Module({ imports: [forwardRef(() => UsersModule)] })
+export class TasksModule {}
+```
+
+* **✅ Good Practice:**
+
+```typescript
+// tasks.module.ts
+@Module({
+  imports: [PrismaModule],
+  controllers: [TasksController],
+  providers: [TasksService],
+})
+export class TasksModule {}
+```
 
 ---
 
-### 💉 Inyección de Dependencias (`di-`)
+### 💉 Dependency Injection (`di-`)
+
 #### `di-prefer-constructor-injection`
-* **Clasificación:** 🔴 **MUST HAVE**
-* **Descripción:** La resolución de dependencias debe realizarse de forma obligatoria mediante la declaración explícita en el constructor de la clase utilizando `private readonly`. Queda prohibido usar `@Inject()` de propiedades o llamadas directas en tiempo de ejecución.
-* **❌ Mala Práctica:**
-    ```typescript
-    export class TasksService {
-      @Inject(PrismaService)
-      private prisma: PrismaService;
-    }
-    ```
-* **✅ Buena Práctica:**
-    ```typescript
-    export class TasksService {
-      constructor(private readonly prisma: PrismaService) {}
-    }
-    ```
+
+* **Classification:** 🔴 **MUST HAVE**
+
+* **Description:** Dependencies must always be injected explicitly through the constructor using `private readonly`. Property injection using `@Inject()` or runtime dependency resolution is prohibited.
+
+* **❌ Bad Practice:**
+
+```typescript
+export class TasksService {
+  @Inject(PrismaService)
+  private prisma: PrismaService;
+}
+```
+
+* **✅ Good Practice:**
+
+```typescript
+export class TasksService {
+  constructor(private readonly prisma: PrismaService) {}
+}
+```
 
 ---
 
-### 🛡️ Seguridad y Validaciones (`security-`)
+### 🛡️ Security and Validation (`security-`)
+
 #### `security-validate-all-input`
-* **Clasificación:** 🔴 **MUST HAVE**
-* **Descripción:** Todos los endpoints expuestos que reciban un cuerpo de petición (`@Body()`) deben validar sus propiedades en tiempo de ejecución utilizando `class-validator` mediante Data Transfer Objects (DTOs) tipados. Los servicios deben aplicar `.trim()` en strings críticos para sanitizar los campos.
-* **❌ Mala Práctica:**
-    ```typescript
-    @Post()
-    async create(@Body() rawData: any) {
-      return this.tasksService.create(rawData);
-    }
-    ```
-* **✅ Buena Práctica:**
-    ```typescript
-    export class CreateTaskDto {
-      @IsString()
-      @IsNotEmpty({ message: 'Title is required' })
-      title: string;
 
-      @IsNumber()
-      @Min(1, { message: 'Amount must be greater than zero' })
-      amount: number;
-    }
-    ```
+* **Classification:** 🔴 **MUST HAVE**
+
+* **Description:** Every endpoint receiving a request body (`@Body()`) must validate input using typed DTOs with `class-validator`. Services must sanitize critical string fields using `.trim()`.
+
+* **❌ Bad Practice:**
+
+```typescript
+@Post()
+async create(@Body() rawData: any) {
+  return this.tasksService.create(rawData);
+}
+```
+
+* **✅ Good Practice:**
+
+```typescript
+export class CreateTaskDto {
+  @IsString()
+  @IsNotEmpty({ message: 'Title is required' })
+  title: string;
+
+  @IsNumber()
+  @Min(1, { message: 'Amount must be greater than zero' })
+  amount: number;
+}
+```
 
 ---
 
-### 🧪 Pruebas Unitarias (`test-`)
+### 🧪 Unit Testing (`test-`)
+
 #### `test-mock-external-services`
-* **Clasificación:** 🔴 **MUST HAVE**
-* **Descripción:** **REGLA ACADÉMICA CRÍTICA.** Queda terminantemente prohibido realizar escrituras, modificaciones o lecturas reales en la base de datos PostgreSQL durante la ejecución de pruebas unitarias. Toda interacción de datos con la capa ORM debe simularse abstrayendo el comportamiento mediante objetos mock resueltos (`prismaMock`).
-* **❌ Mala Práctica:**
-    ```typescript
-    it('should create a task', async () => {
-      const res = await realPrismaService.task.create({ data: taskDto });
-      expect(res.id).toBeDefined();
-    });
-    ```
-* **✅ Buena Práctica:**
-    ```typescript
-    it('should create a task without hitting the database', async () => {
-      const mockResult = { id: 1, title: 'Walk the dog', amount: 20 };
-      (prismaMock.task.create as any).mockResolvedValue(mockResult);
 
-      const result = await service.create(validTaskDto);
-      expect(result.amount).toEqual(20);
-      expect(prismaMock.task.create).toHaveBeenCalled();
-    });
-    ```
+* **Classification:** 🔴 **MUST HAVE**
 
----
+* **Description:** **CRITICAL ACADEMIC RULE.** Reading from or writing to the real PostgreSQL database during unit testing is strictly prohibited. Every ORM interaction must be simulated using resolved mocks (`prismaMock`).
 
-## 📈 3. Evidencias de Cumplimiento
+* **❌ Bad Practice:**
 
-Todas las directrices estipuladas en esta matriz se comprueban de manera determinista mediante las herramientas automatizadas del repositorio:
+```typescript
+it('should create a task', async () => {
+  const res = await realPrismaService.task.create({ data: taskDto });
+  expect(res.id).toBeDefined();
+});
+```
 
-1.  **Validación de Estilo y Reglas Estáticas (Linter):** Gestionado a través de **ESLint**, asegurando la inexistencia de código muerto o fallas de arquitectura estricta.
-2.  **Validación Funcional Límite (Testing Unitario):** Controlado a través de **Jest**. La suite del backend ejecuta de manera exitosa los casos de prueba blindados:
-    * **Test Suites:** 9 pasadas con éxito.
-    * **Casos Unitarios:** Evaluación exhaustiva de datos extremos (valores inválidos, límites inferiores a cero, inputs vacíos con espaciado, y transiciones de estados lógicos controlados).
+* **✅ Good Practice:**
+
+```typescript
+it('should create a task without hitting the database', async () => {
+  const mockResult = { id: 1, title: 'Walk the dog', amount: 20 };
+  (prismaMock.task.create as any).mockResolvedValue(mockResult);
+
+  const result = await service.create(validTaskDto);
+  expect(result.amount).toEqual(20);
+  expect(prismaMock.task.create).toHaveBeenCalled();
+});
+```
 
 ---
 
-## 🚀 Cómo Aplicar este Skill (`How to use`)
+## 📈 3. Compliance Evidence
 
-* **Durante el desarrollo local:** Ejecute de forma preventiva `npx prisma generate` ante cambios en esquemas para mantener los tipados alineados con los modelos estáticos del proyecto.
-* **Antes de realizar un Commit/Push:** Corra localmente la suite de análisis de código y testing unificado para certificar que el casillero se mantiene libre de fallas en consola:
-    ```bash
-    npm run test
-    ```
+All rules defined in this skill must be verified deterministically using the repository's automated tools.
+
+1. **Static Analysis (Linter):** Managed through **ESLint**, ensuring the absence of dead code and architectural violations.
+2. **Unit Testing:** Managed through **Jest**. The backend test suite must successfully execute:
+
+   * **Test Suites:** 9 passing.
+   * **Unit Tests:** Comprehensive validation of boundary cases, invalid values, negative limits, empty or whitespace-only inputs, and controlled logical state transitions.
+
+---
+
+## 🧠 4. Skill Verification Rules (MANDATORY)
+
+Every evaluation must comply with the following requirements:
+
+1. Compliance must never be inferred from project structure or file names.
+2. Every MUST rule must be validated with direct evidence from the source code.
+3. Every finding must include:
+
+   * Exact file
+   * Relevant code fragment
+   * Short technical explanation
+4. If direct evidence cannot be found:
+
+   * Mark the rule as **❌ NOT VERIFIABLE**
+5. The following expressions are prohibited:
+
+   * "assumed"
+   * "probably"
+   * "suggests"
+   * "inferred"
+6. The evaluator must behave as a code auditor, not as a structural analyst.
+
+---
+
+## 📊 5. Produce the Review Report
+
+### Severity Levels
+
+* **MUST FIX (Blocking)** — Circular dependencies between modules, business logic inside controllers, property injection using `@Inject()`, missing DTO validation with `class-validator`, missing `.trim()` on critical string fields, direct database access during unit tests instead of `prismaMock`.
+
+* **SHOULD FIX (Non-blocking)** — Inconsistent module organization, missing `private readonly` in constructor injection, inconsistent response structure, missing input sanitization on non-critical fields, incomplete unit test coverage for expected scenarios.
+
+* **SUGGESTION** — Optional refactoring opportunities, naming consistency improvements, code readability enhancements, additional test cases for edge cases, documentation improvements.
+
+
+
+### Output Format
+
+Return **only** the structured report below. Do not include introductions, explanations, or narration.
+
+#### Backend Review Report
+
+* **Scope:** [Full audit / Local changes / PR #]
+* **Files reviewed:** [count and list grouped by layer]
+
+###### Architecture Compliance
+
+| # | File:Line | Rule | Severity | Details |
+| - | --------- | ---- | -------- | ------- |
+
+##### Code Quality
+
+| # | File:Line | Rule | Severity | Details |
+| - | --------- | ---- | -------- | ------- |
+
+##### Security
+
+| # | File:Line | Rule | Severity | Details |
+| - | --------- | ---- | -------- | ------- |
+
+##### Testing
+
+| # | File:Line | Rule | Severity | Details |
+| - | --------- | ---- | -------- | ------- |
+
+### Test coverage 
+[expected vs found, gaps identified]
+
+### Verdict
+
+✅ APPROVED
+
+🟡 APPROVED WITH OBSERVATIONS
+
+🔴 CHANGES REQUIRED
+
+### Summary
+
+[1–2 sentence overall assessment]
+
+---
+
+## 🧠 6. Evaluator Execution Mode (MANDATORY)
+
+This skill must be executed as a deterministic code auditing system.
+
+The evaluator must strictly follow the workflow below.
+
+---
+
+### 1. Mandatory Skill Reading
+
+* Read the entire `skill_back.md` file before performing any analysis.
+* This file is the single source of truth for the evaluation.
+
+---
+
+### 2. Repository Analysis
+
+* Analyze the entire backend repository.
+* Do not limit the evaluation to isolated files or partial assumptions.
+
+---
+
+### 3. Rule-by-Rule Evaluation
+
+* Every MUST and SHOULD rule must be evaluated individually.
+* Generic or grouped evaluations are not allowed.
+
+---
+
+### 4. Mandatory Evidence
+
+Every decision must include:
+
+* Exact file
+* Line number or relevant code fragment
+* Short technical explanation based on the actual implementation
+
+If no direct evidence exists:
+
+→ Mark the rule as **❌ NOT VERIFIABLE**
+
+---
+
+### 5. Strict Prohibitions
+
+* Do not infer compliance from project structure.
+* Do not assume compliance based on file names.
+* Do not use probabilistic language such as:
+
+  * "appears"
+  * "probably"
+  * "inferred"
+  * "suggests"
+
+---
+
+### 6. Evaluator Objective
+
+The evaluator must behave as a senior NestJS backend auditor for production environments, not as a superficial architecture reviewer.
+
+Its responsibility is to detect real implementation issues rather than apparent architectural patterns.
+
+---
+
+## 🚀 How to Use This Skill
+
+* **During local development:** Run `npx prisma generate` whenever the Prisma schema changes to keep generated types synchronized.
+* **Before every commit or push:** Execute the complete validation suite to ensure the project is free of code quality and testing issues.
+
+```bash
+npm run test
+```
